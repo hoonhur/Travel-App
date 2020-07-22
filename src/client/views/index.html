@@ -1,35 +1,55 @@
 <!DOCTYPE html>
 <html>
-<head>
-<meta charset="UTF-8">
-<title>Travel App</title>
-<link href="https://fonts.googleapis.com/css?family=Oswald:400,600,700|Ranga:400,700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css">
-</head>
- <body>
-<div id = "app">
-  <div class ="holder headline">
-    <h1>Travel App</h1>
-  </div>
-  <div class ="holder zip">
-    <label for="zip">Enter Zipcode here:</label>
-    <input type="text" id="zip" placeholder="enter zip code here">
-  </div>
-  <div class ="holder feel">
-    <label for="feelings">How are you feeling today?</label>
-    <textarea class= "myInput" id="feelings" placeholder="Enter your feelings here" rows="9" cols="50"></textarea>
-    <button id="generate" type = "submit"> Generate </button>
-  </div>
-  <div class ="holder entry">
-    <div class = "title">Most Recent Entry:</div>
-   <div id = "entryHolder">
-    <div id = "date"></div> 
-   <div id = "temp"></div>
-   <div id = "content"></div>
-  </div>
-  </div>
-  </div>
-<script src="app.js" type="text/javascript"></script>
+  <head>
+    <meta charset="UTF-8">
+    <title>Travel App</title>
+  </head>
 
-</body>
+  <body>
+    <div id = "app">
+      <div class ="">
+        <h1>Travel Planner</h1>
+      </div>
+
+      <div id = "clientInput">
+        <div class ="holder city">
+          <label for="city">City to travel:</label>
+          <input type="text" id="city" placeholder="City">
+        </div>  
+        <div class ="holder date">
+          <label for="zip">Departing date:</label>
+          <input type="text" id="date" placeholder="mm/dd/yyyy">
+        </div>
+        <button id="generate" type = "submit"> Generate </button>
+      </div>
+
+      <div id ="output">
+        <div id = "picture">
+          <img src='../bunny.jpg' width= 300px, height= 200px>
+        </div>
+        <div id ="result">
+          <div class="resultLine" id = "destination"><h2>My trip to:</h2></div> 
+          <div class="resultLine" id = "departingDate"><h2>Departing:</h2></div>
+          <div class = "buttons">
+            <button id="saveTrip" type = "submit"> save trip </button>
+            <button id="removeTrip" type = "submit"> remove trip </button>
+          </div>
+          <div class="resultLine" id = "toDate"><h3></h3></div>
+          <div class="resultLine" id = "weather"><h3></h3></div>
+          <div><h4></h4></div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // Check that service workers are supported
+      if ('serviceWorker' in navigator) {
+          // Use the window load event to keep the page load performant
+          window.addEventListener('load', () => {
+              navigator.serviceWorker.register('/service-worker.js');
+          });
+      }
+     </script>
+
+  </body>
 </html>

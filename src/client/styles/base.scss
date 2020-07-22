@@ -1,0 +1,69 @@
+body{
+    background: #fffff8;
+    font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+#app{
+    display: flex;
+    flex-direction: column;
+    font-family: 'Oswald', sans-serif;
+}
+
+#clientInput {
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+    line-height: 16px;
+    margin: 10px 0;
+}
+
+label {
+    margin-right: 10px;
+}
+
+.holder {
+    display: flex;
+    margin-bottom: 10px;
+}
+
+#output {
+    display: flex;
+    background-color: rgb(243, 215, 232);
+}
+
+#picture {
+    padding: 20px;
+}
+
+#result {
+    display: flex;
+    flex-direction: column;
+    padding-top: 0px;
+    padding-left: 20px;
+    padding-bottom: 40px;
+}
+
+.resultLine {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.buttons {
+    display: flex;
+}
+
+/* Style for Placeholder Text*/
+::placeholder { /* Firefox, Chrome, Opera */ 
+    font-family: 'Oswald', sans-serif;
+} 
+  
+:-ms-input-placeholder { /* Internet Explorer 10-11 */ 
+    font-family: 'Oswald', sans-serif;
+
+} 
+  
+::-ms-input-placeholder { /* Microsoft Edge */ 
+    font-family: 'Oswald', sans-serif;
+
+} 
