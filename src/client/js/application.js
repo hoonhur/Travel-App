@@ -5,9 +5,9 @@ const geoBaseUrl = 'http://api.geonames.org/postalCodeSearchJSON?placename='
 const geoUsername = '&username=hunhuh10'
 
 // URL for weatherbit
-const wthrBaseUrl = '
-const wthrHstrUrl = 'https://api.weatherbit.io/v2.0/history/daily?
-const wthrKey = '0354bba909aa42b0a47bd1f252e02b21'
+const wthrBaseUrl = 'https://api.weatherbit.io/v2.0/forecast/daily?city=
+const wthrHstrUrl = 'https://api.weatherbit.io/v2.0/history/daily?city=
+const wthrKey = '&key=0354bba909aa42b0a47bd1f252e02b21'
 
 // Function
 
@@ -69,7 +69,8 @@ postData ()
 )
 }
 
-&city=Raleigh,NC&start_date=2020-07-19&end_date=2020-07-20
+Raleigh,NC&key=
+Raleigh,NC&start_date=2020-07-19&end_date=2020-07-20
 
 // POST Route, function postData
 const postData = async(url = '', data = {}) => {
