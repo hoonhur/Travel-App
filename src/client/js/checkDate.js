@@ -5,7 +5,7 @@ function checkDate (date) {
         alert("Invalid date format. please input date as 'mm/dd/yyyy' format");
         return false;
     } else {
-        console.log('Date input is valid')
+        console.log('Date format is valid')
         return true;
     }
 }
