@@ -28,18 +28,17 @@ function countDaysLeft(d) {
     const today = new Date(currentDate);
     const date = new Date(d);
 
-    //One day time in msg
+    //One day time in ms
     const oneDayTimeMS = 1000 * 60 * 60 * 24;
     
     let diffTime = date-today;
-    if (diffTime > 0) {
-        daysLeft = Math.ceil(diffTime/oneDayTimeMS)
-        if (daysLeft >= 0) {
-            tripData.daysLeft = daysLeft;
-        } else {
-        alert('The date is already passed');
-        }
-    }
+    daysLeft = Math.ceil(diffTime/oneDayTimeMS)
+    if (daysLeft > 16) {
+            alert('please input date within 16 days from today')
+    } else if (daysLeft <0) {
+            alert('The date is already passed')
+    } else {}
+        tripData.daysLeft = daysLeft; 
 }
 
 /* the main func which calls all other functions */
@@ -48,7 +47,7 @@ const handleSubmit = () => {
     date = document.getElementById('date').value;
   
     // check if the user puts validated date
-    // Client.checkDate(date);
+    Client.checkDate(date);
     // check number of days between today
     countDaysLeft(date);
 
