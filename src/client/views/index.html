@@ -17,7 +17,7 @@
           <input type="text" id="city" placeholder="City">
         </div>  
         <div class ="holder date">
-          <label for="zip">Departing date:</label>
+          <label for="date">Departing date:</label>
           <input type="text" id="date" placeholder="mm/dd/yyyy">
         </div>
         <button id="generate" type = "submit"> Generate </button>
@@ -25,18 +25,17 @@
 
       <div id ="output">
         <div id = "picture">
-          <img src='../bunny.jpg' width= 300px, height= 200px>
         </div>
         <div id ="result">
-          <div class="resultLine" id = "destination"><h2>My trip to:</h2></div> 
-          <div class="resultLine" id = "departingDate"><h2>Departing:</h2></div>
+          <div class="resultLine" id = "destination"></div> 
+          <div class="resultLine" id = "departingDate"></div>
           <div class = "buttons">
             <button id="saveTrip" type = "submit"> save trip </button>
             <button id="removeTrip" type = "submit"> remove trip </button>
           </div>
-          <div class="resultLine" id = "toDate"><h3></h3></div>
-          <div class="resultLine" id = "weather"><h3></h3></div>
-          <div><h4></h4></div>
+          <div class="resultLine" id = "toDate"></div>
+          <div class="resultLine" id = "weather"></div>
+          <div id = 'description></div>
         </div>
       </div>
     </div>
