@@ -1,5 +1,9 @@
 /* Global Variables */
 const tripData = {}
+let daysLeft
+let city
+let date
+
 //geonames url, username
 const geoBaseURL = 'http://api.geonames.org/searchJSON?'; 
 const geoUsername = '&username=hunhuh10'
@@ -7,7 +11,7 @@ const geoPara = '&maxRows=1';
 
 // Weatherbit url and key api
 const wthrBaseUrl = 'https://api.weatherbit.io/v2.0/forecast/daily?';
-const wthrHistoricalUrl = 'https://api.weatherbit.io/v2.0/history/daily';
+// const wthrHistoricalUrl = 'https://api.weatherbit.io/v2.0/history/daily';
 const wthrKey = '&key=912958a2996f40d1bbe74993d7080986';
 
 // Pixabay api
@@ -15,30 +19,21 @@ const pixBaseUrl = 'https://pixabay.com/api/?key=';
 const pixKey = '17552769-fee70d93d21f168f4a1a5c00a';
 const pixPara = '&image_type=photo&category=travel'
 
-// DOM elements
-const city = document.getElementById('city');
-const form = document.getElementById('form');
-const weatherTitle = document.getElementById('weather-info');
-const country = document.getElementById('country');
-const daysCounter = document.getElementById('days-counter');
-const temp = document.getElementById('temp');
-const description = document.getElementById('description');
-const cityImg = document.querySelector('#city-img img')
-const caption = document.querySelector('#city-img figcaption')
-
 /* functions */
 
 /* helper functions */
 // check the days between the current date and input date
 function countDaysLeft(d) {
-    let today = new Date();
+    const currentDate = new Date();
+    const today = new Date(currentDate);
+    const date = new Date(d);
 
-    //One day time in ms
+    //One day time in msg
     const oneDayTimeMS = 1000 * 60 * 60 * 24;
     
-    let diffTime = d.getTime() - today.getTime();
+    let diffTime = date-today;
     if (diffTime > 0) {
-        let daysLeft = Math.ceil(diffTime/oneDayTimeMS)
+        daysLeft = Math.ceil(diffTime/oneDayTimeMS)
         if (daysLeft >= 0) {
             tripData.daysLeft = daysLeft;
         } else {
@@ -49,11 +44,11 @@ function countDaysLeft(d) {
 
 /* the main func which calls all other functions */
 const handleSubmit = () => {
-    let city = document.getElementById('city').value;
-    let date = document.getElementById('date').value;
+    city = document.getElementById('city').value;
+    date = document.getElementById('date').value;
   
     // check if the user puts validated date
-    Client.checkDate(date);
+    // Client.checkDate(date);
     // check number of days between today
     countDaysLeft(date);
 
@@ -62,17 +57,18 @@ const handleSubmit = () => {
     getGeonames(geonamesURL)
     // call weatherbit by lat/lon
     .then(() => {
-        const urlWthr = wthrBaseUrl + `lat=${geoData.lat}&lon=${geoData.lng}` + wthrKey;
-        return getWthr(urlWthr)
+        const wthrUrl = wthrBaseUrl + `lat=${tripData.lat}&lon=${tripData.lng}` + wthrKey;
+        return getWthr(wthrUrl)
     })
     // call pixabay
     .then(() => {
-        const pixUrl = pixBaseUrl + pixKey + '&q=' + city + pixPara;
+        const pixUrl = pixBaseUrl + pixKey + '&q=' + tripData.city + pixPara;
+        console.log(pixUrl)
         return getImg(pixUrl);
     })
     // finally update the UI and post the tripData
     .then(() => {
-        postData('/trip', tripData);
+        postData('http://localhost:8082/trip', tripData);
         updateUI();
     })
 };
@@ -87,6 +83,9 @@ const getGeonames = async(url) => {
         console.log(geoData);
         // store the country of the provided city
         tripData.country = geoData.countryName;
+        tripData.city = geoData.adminName1;
+        tripData.lat = geoData.lat;
+        tripData.lng = geoData.lng;
         return geoData;
     } catch(error) {
         console.log('error at getGeonames', error)
@@ -100,7 +99,7 @@ const getWthr = async(url) => {
     try {
         const res = await req.json();
         // store data arrays
-        const wthrData = res.data;
+        const wthrData = res.data[daysLeft];
         console.log(wthrData)
          // store weather data
         tripData.highTemp = wthrData.high_temp;
@@ -118,6 +117,7 @@ const getImg = async(url) => {
         const res = await req.json();
         // store the img with its alt
         const pixData = res.hits[0];
+        console.log(pixData)
         tripData.img = pixData.largeImageURL;
         tripData.alt = pixData.tags;
     } catch(error) {
@@ -148,8 +148,8 @@ const updateUI = () => {
     document.getElementById('destination').innerHTML = `<h2>My trip to: ${city}, ${tripData.country}</h2>`
     document.getElementById('departingDate').innerHTML = `<h2>Departing: ${date}</h2>`
     document.getElementById('toDate').innerHTML = `<h3>${city} is ${tripData.daysLeft} days away.</h3>`
-    document.getElementById('weather').innerHTML = `<h3>Typical weather for then is: Mostly cloudy thoughout the day (High - 46, Low - 35).</h3>`
-   `<img src='${tripData.img} alt=${tripData.alt} width= 300px, height= 200px>`
+    document.getElementById('weather').innerHTML = `<h3>Typical weather for then is: ${tripData.description} thoughout the day (High - ${tripData.highTemp}, Low - ${tripData.lowTemp}).</h3>`
+    document.getElementById('picture').innerHTML = `<img src='${tripData.img}' alt=${tripData.alt} width= 300px, height= 200px>`
 };
 
 export { handleSubmit }
