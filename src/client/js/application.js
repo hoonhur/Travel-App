@@ -8,7 +8,8 @@ const geoUsername = '&username=hunhuh10'
 
 // Function
 
-//changeDateFormat(d) {
+// Function to change date format 
+changeDateFormat(d) {
   geoDate = d[6] + d[7] + d[8] + d [9] + '-' + d[0] + d[1] + '-' + d[3] + d[4];
   return geoDate;
 }
