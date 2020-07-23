@@ -82,9 +82,10 @@ const updateUI = async() =>{
     try{
         const allData = await request.json()
         const last = allData.length - 1;
-        document.getElementById('date').innerHTML = allData[last].date;
-        document.getElementById('temp').innerHTML = allData[last].temperature;
-        document.getElementById('content').innerHTML = allData[last].userResponse;
+        document.getElementById('city').innerHTML = '<h2>${allData[last].city}, ${allData[last].country}/h2>';
+        document.getElementById('date').innerHTML = '<h2>${allData[last].date}<h2>';
+        document.getElementById('diffDays').innerHTML = '<h3>${allData[last].diffDays}<h3>';
+        document.getElementById('weather').innerHTML = '<h3>${allData[last].highTemp}, ${allData[last].lowTemp}, ${allData[last].description}<h3>';
         console.log(allData);
     }catch (error) {
         console.log('error', error);
