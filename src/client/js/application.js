@@ -1,10 +1,13 @@
 // Decalaration of Global Variables
 
 // URL for geonames
-const geoBaseURL = 'http://api.geonames.org/postalCodeSearchJSON?placename='
+const geoBaseUrl = 'http://api.geonames.org/postalCodeSearchJSON?placename='
 const geoUsername = '&username=hunhuh10'
-//http://api.geonames.org/postalCodeSearchJSON?placename=raleigh&username=demo//
 
+// URL for weatherbit
+const wthrBaseUrl = '
+const wthrHstrUrl = 'https://api.weatherbit.io/v2.0/history/daily?
+const wthrKey = '0354bba909aa42b0a47bd1f252e02b21'
 
 // Function
 
@@ -46,9 +49,9 @@ getGeonames(geoBaseUrl, city, geoUsername)
 // Historical weather API for date difference is over 16 days (including past date)
 .then(() => {
 If(diffDays >= 0 && diffDays < 16) {
-getWeather()
+getWeather(wthrBaseUrl, geoData, wthrKey)
 } else {
-getWeather()
+getWeather(wthrHstyUrl, geoData, wthrKey)
 })
 
 // Call Function postData for Weatherbit API
@@ -65,6 +68,8 @@ postData ()
 .then(function(){updateUI()}
 )
 }
+
+&city=Raleigh,NC&start_date=2020-07-19&end_date=2020-07-20
 
 // POST Route, function postData
 const postData = async(url = '', data = {}) => {
