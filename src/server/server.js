@@ -1,16 +1,14 @@
 const path = require('path')
 const express = require('express')
 const app = express()
-app.use(express.static('dist'))
-
 const bodyParser = require('body-parser')
+const cors = require('cors')
+const regeneratorRuntime = require('regenerator-runtime')
+
+app.use(express.static('dist'))
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
-
-const cors = require('cors')
 app.use(cors())
-
-const regeneratorRuntime = require('regenerator-runtime')
 
 app.get('/', (req, res) => res.sendFile('dist/index.html'))
 app.listen(8081, () => console.log(`running on localhost: 8081`));
