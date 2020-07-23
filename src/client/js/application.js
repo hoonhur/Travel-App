@@ -1,5 +1,10 @@
 // Decalaration of Global Variables
 
+// URL for geonames
+const geoBaseURL = 'http://api.geonames.org/postalCodeSearchJSON?placename='
+const geoUsername = '&username=hunhuh10'
+//http://api.geonames.org/postalCodeSearchJSON?placename=raleigh&username=demo//
+
 
 // Function
 
@@ -10,6 +15,7 @@
 // Function to change date format to get API
 
 // Async Function for Geonames
+
 // Call Function postData for Geonames API
 
 // Async Func for Weatherbit
