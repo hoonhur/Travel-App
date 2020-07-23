@@ -11,24 +11,13 @@ app.use(bodyParser.json())
 app.use(cors())
 
 app.get('/', (req, res) => res.sendFile('dist/index.html'))
-app.listen(8081, () => console.log(`running on localhost: 8081`));
+app.listen(8082, () => console.log(`running on localhost: 8082`));
 
 // Setup empty JS object to act as endpoint for all routes
 projectData = {}
 
-app.get('/all', (req,res) => {
-    res.send(projectData);
-    console.log('data is received');
-    console.log(projectData);
-});
-
 // Post Route
-app.post('/addData', (req,res) => {
-    const data = {
-        temperature: req.body.temp,
-        date: req.body.date,
-        userResponse: req.body.content
-    };
-    projectData.push(data);
+app.post('/trip', (req,res) => {
+    let projectData = req.body;
     res.send(projectData);
 });
