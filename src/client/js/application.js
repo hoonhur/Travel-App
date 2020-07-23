@@ -51,6 +51,11 @@ getGeonames(geoBaseUrl, city, geoUsername)
 // Async Func for pixabay
 // Call Function postData for Pixabay API
 
+// Call Function updateUI
+.then(function(){updateUI()}
+)
+}
+
 // POST Route, function postData
 const postData = async(url = '', data = {}) => {
     const res = await fetch(url, {
@@ -70,9 +75,21 @@ const postData = async(url = '', data = {}) => {
     }
 };
 
-// GET Route for Project Data (/projectdata)
+// GET Route for Project Data and updateUI
 
-// Update UI with Project Data
+const updateUI = async() =>{
+    const request = await fetch('/all');
+    try{
+        const allData = await request.json()
+        const last = allData.length - 1;
+        document.getElementById('date').innerHTML = allData[last].date;
+        document.getElementById('temp').innerHTML = allData[last].temperature;
+        document.getElementById('content').innerHTML = allData[last].userResponse;
+        console.log(allData);
+    }catch (error) {
+        console.log('error', error);
+    }
+};
 
 
 
