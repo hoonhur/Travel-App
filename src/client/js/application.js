@@ -13,15 +13,15 @@ const wthrKey = '&key=0354bba909aa42b0a47bd1f252e02b21'
 
 // Function to change date format 
 changeDateFormat(d) {
-  geoDate = d[6] + d[7] + d[8] + d [9] + '-' + d[0] + d[1] + '-' + d[3] + d[4];
-  return geoDate;
+  whtrDate = d[6] + d[7] + d[8] + d [9] + '-' + d[0] + d[1] + '-' + d[3] + d[4];
+  return whtrDate;
 }
 
 function handleSubmit () {
 //declaration of variables
 let city = document.getElementById(city).value;
 let date = document.getElementById(date).value;
-let geoDate = date;
+let whtrDate = date;
 
 /* Check Input Date
 1. check format
@@ -34,7 +34,7 @@ if(diffDays < 0 & diffDays >= 16) {
   changeDateFormat(date)
 };
 
-// Async Function for Geonames
+// Call Function to get Geonames API
 getGeonames(geoBaseUrl, city, geoUsername)
 // Call Function postData for Geonames API
 .then (function(geoData){
@@ -44,21 +44,21 @@ getGeonames(geoBaseUrl, city, geoUsername)
     latitude = goeData.lat
     longitude = geoData.lng
 })
-// Async Func for Weatherbit
-// Forecast 16 days API for input date within 16 days
+// Call Function to get Weatherbit API
+// Forecast 16 days weather API for input date within 16 days
 // Historical weather API for date difference is over 16 days (including past date)
 .then(() => {
 If(diffDays >= 0 && diffDays < 16) {
-getWeather(wthrBaseUrl, geoData, wthrKey)
+getWeatherbit(wthrBaseUrl, city, geoData.country, whtrDate, wthrKey)
 } else {
-getWeather(wthrHstyUrl, geoData, wthrKey)
+getWeatherbit(wthrHstyUrl, city, geoData.country, whtrDate, wthrKey)
 })
 
 // Call Function postData for Weatherbit API
 .then(function(){
 postData ()
 })
-// Async Func for pixabay
+// Call Function to get pixabay API
 .then(getPixabay())
 // Call Function postData for Pixabay API
 .then(function(){
@@ -67,6 +67,19 @@ postData ()
 // Call Function updateUI
 .then(function(){updateUI()}
 )
+}
+
+//function to get weatherbit API
+
+const getWeather = async (baseURL, zip, key) => {
+    const req = await fetch(baseURL+zip+key)
+    try {
+        data = await req.json();
+        console.log(data);
+        return data;
+    } catch(error) {
+        console.log('error', error);
+    }
 }
 
 Raleigh,NC&key=
