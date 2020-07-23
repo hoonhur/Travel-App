@@ -49,9 +49,9 @@ getGeonames(geoBaseUrl, city, geoUsername)
 // Historical weather API for date difference is over 16 days (including past date)
 .then(() => {
 If(diffDays >= 0 && diffDays < 16) {
-getWeatherbit(wthrBaseUrl, city, geoData.country, whtrDate, wthrKey)
+getWthrFcst(wthrBaseUrl, city, geoData.country, wthrKey)
 } else {
-getWeatherbit(wthrHstyUrl, city, geoData.country, whtrDate, wthrKey)
+getWtHstr(wthrHstyUrl, city, geoData.country, whtrDate, wthrKey)
 })
 
 // Call Function postData for Weatherbit API
@@ -71,7 +71,7 @@ postData ()
 
 //function to get weatherbit API
 
-const getWeather = async (baseURL, zip, key) => {
+const getWthrFcst = async (baseURL, zip, key) => {
     const req = await fetch(baseURL+zip+key)
     try {
         data = await req.json();
@@ -81,6 +81,8 @@ const getWeather = async (baseURL, zip, key) => {
         console.log('error', error);
     }
 }
+
+const getWthrHstr = async () => {}
 
 Raleigh,NC&key=
 Raleigh,NC&start_date=2020-07-19&end_date=2020-07-20
