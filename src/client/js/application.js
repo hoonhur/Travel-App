@@ -41,16 +41,26 @@ getGeonames(geoBaseUrl, city, geoUsername)
     latitude = goeData.lat
     longitude = geoData.lng
 })
-
 // Async Func for Weatherbit
 // Forecast 16 days API for input date within 16 days
 // Historical weather API for date difference is over 16 days (including past date)
+.then(() => {
+If(diffDays >= 0 && diffDays < 16) {
+getWeather()
+} else {
+getWeather()
+})
 
 // Call Function postData for Weatherbit API
-
+.then(function(){
+postData ()
+})
 // Async Func for pixabay
+.then(getPixabay())
 // Call Function postData for Pixabay API
-
+.then(function(){
+postData ()
+})
 // Call Function updateUI
 .then(function(){updateUI()}
 )
