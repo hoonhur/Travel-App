@@ -83,11 +83,11 @@ const updateUI = async() =>{
         const allData = await request.json()
         const last = allData.length - 1;
         document.getElementById('picture').innerHTML = '<img src='' alt= width=300px height=200px>';
-        document.getElementById('destination').innerHTML = <h2>'My trip to: ${allData[last].city}, ${allData[last].country}<h2>';
-        document.getElementById('departingDate').innerHTML = '<h2>Departing: ${allData[last].date}<h2>';
-        document.getElementById('toDate').innerHTML = '<h3>${allData[last].diffDays}<h3>';
-        document.getElementById('weather').innerHTML = '<h3>${allData[last].highTemp}, ${allData[last].lowTemp}, ${allData[last].description}<h3>';
-        document.getElementById('description').innerHTML = '<h4>${allData[last].description}<h4>';
+        document.getElementById('destination').innerHTML = '<h2>My trip to: ${allData[last].city}, ${allData[last].country}</h2>';
+        document.getElementById('departingDate').innerHTML = '<h2>Departing: ${allData[last].date}</h2>';
+        document.getElementById('toDate').innerHTML = '<h3>${allData[last].diffDays}</h3>';
+        document.getElementById('weather').innerHTML = '<h3>${allData[last].highTemp}, ${allData[last].lowTemp}, ${allData[last].description}</h3>';
+        document.getElementById('description').innerHTML = '<h4>${allData[last].description}</h4>';
         console.log(allData);
     }catch (error) {
         console.log('error', error);
