@@ -3,7 +3,7 @@
 
 /* Check Input Date
 1. check format
-2. check difference number of date between today
+2. check difference number of date between today*/
 
 // Function
 
