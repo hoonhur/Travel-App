@@ -12,7 +12,7 @@ const wthrKey = '&key=0354bba909aa42b0a47bd1f252e02b21'
 // URL for pixabay
 const pixBaseUrl = 'https://pixabay.com/api/?key=17552769-fee70d93d21f168f4a1a5c00a&image_type=photo&category=travel&q'
 
-let diffDays 
+let diffDays
 
 // Function //
 
@@ -49,7 +49,7 @@ function handleSubmit() {
     .then(function(geoData) {
         postData('/addData', {
             country: geoData.countryCode,
-            city: geoData.adminName1,
+            city: geoData.placeName,
             latitude: goeData.lat,
             longitude: geoData.lng
         })
@@ -59,7 +59,7 @@ function handleSubmit() {
 // Historical weather API for date difference is over 16 days (including past date)
     .then(() => {
         if(diffDays >= 0 && diffDays < 16) {
-            getWthrFcst(wthrBaseUrl, city, geoData.country, wthrKey)
+            getWthrFcst(wthrBaseUrl, city, geoData.countryCode, wthrKey)
             .then(function(wthrData) {
                 postData('/addData', {
                     highTemp: wthrData.data[diffDays].max_temp,
@@ -68,7 +68,7 @@ function handleSubmit() {
                 })
             })
         } else {
-        getWthrHstr(wthrHstrUrl, city, geoData.country, whtrDate, wthrKey)
+        getWthrHstr(wthrHstrUrl, city, geoData.countryCode, whtrDate, wthrKey)
         .then(function(wthrData) {
             postData('/addData', {
                 highTemp: wthrData.data.max_temp,
@@ -79,7 +79,7 @@ function handleSubmit() {
         }
     })
 // Call Function to get pixabay API
-    .then(getPixabay(pixBaseUrl, city, geoData.country))
+    .then(getPixabay(pixBaseUrl, city, geoData.countryCode))
 // Call Function postData for Pixabay API
     .then(function(){
         postData ()
@@ -93,7 +93,8 @@ function handleSubmit() {
 const getGeonames = async (url, city, username) => {
     const req = await fetch (url+city+username)
     try {
-        geoData = await req.json()
+        const geoRawData = await req.json()
+        const geoData = geoRawData.postalCodes[0]
         console.log(geoData)
         return geoData
     } catch (error) {
