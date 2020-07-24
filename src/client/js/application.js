@@ -19,7 +19,14 @@ let diffDays
 // Function to check number of difference of days from today
 function checkDiffDays(d) {
     let today = new Date()
-    diffDays = (d - today)/(1000*60*60*24)
+
+    let currentDate = new Date(today)
+    let date = new Date(d)
+
+    let dfferenceInTime = date - currentDate
+    //divide the time difference by no. of milleseconds in a day
+    diffDays = Math.ceil(dfferenceInTime / (1000*60*60*24))
+    console.log(diffDays)
 }
 
 // Function to change date format 
@@ -50,7 +57,7 @@ function handleSubmit() {
         postData('/addData', {
             country: geoData.countryCode,
             city: geoData.placeName,
-            latitude: goeData.lat,
+            latitude: geoData.lat,
             longitude: geoData.lng
         })
     })
