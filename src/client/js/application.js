@@ -43,8 +43,8 @@ function handleSubmit() {
 // Call Function postData for Geonames API
     .then (function(geoData){
         postData('/addData', {
-            country: geoData.country,
-            city: geoData.city,
+            country: geoData.countryCode,
+            city: geoData.adminName1,
             latitude: goeData.lat,
             longitude: geoData.lng
         })
