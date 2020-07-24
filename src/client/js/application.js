@@ -87,18 +87,27 @@ const getGeonames = async (url, city, username) => {
 }
 
 //Function to get weatherbit API
-const getWthrFcst = async (baseURL, zip, key) => {
-    const req = await fetch(baseURL+zip+key)
+const getWthrFcst = async (url, city, country, key) => {
+    const req = await fetch(url+city+','+country+key)
     try {
-        data = await req.json();
-        console.log(data);
-        return data;
+        wthrData = await req.json();
+        console.log(wthrData);
+        return wthrData;
     } catch(error) {
-        console.log('errar at getWthrFcst', error);
+        console.log('Error at getWthrFcst', error);
     }
 }
 
-const getWthrHstr = async () => {}
+const getWthrHstr = async (url, city, country, date, key) => {
+    const req = await fetch(url+city+','+country+'&start_date'+date+'&end_date'+date+key)
+    try {
+        wthrData = await req.json();
+        console.log(wthrData);
+        return wthrData;
+    } catch(error) {
+        console.log('Error at getWthrHstr', error);
+    }
+}
 
 // POST Route, function postData
 const postData = async(url = '', data = {}) => {
