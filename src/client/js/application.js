@@ -13,7 +13,8 @@ const wthrKey = '&key=0354bba909aa42b0a47bd1f252e02b21'
 
 // Function to check number of difference of days from today
 function checkDiffDays(d) {
-    
+    let today = new Date()
+    diffDays = (d - today)/(1000*60*60*24)
 }
 
 // Function to change date format 
@@ -27,6 +28,7 @@ function handleSubmit() {
     let city = document.getElementById(city).value;
     let date = document.getElementById(date).value;
     let whtrDate = date;
+    let diffDays 
 // Check Input Date
 // 1. check format
     Client.checkDate(date);
@@ -72,8 +74,19 @@ function handleSubmit() {
     )
 }
 
-//function to get weatherbit API
+// Function to get geonames API
+const getGeonames = async (url, city, username) => {
+    const req = await fetch (url+city+username)
+    try {
+        geoData = await req.json()
+        console.log(geoData)
+        return geoData
+    } catch (error) {
+        console.log('Error at getGeonames', error)
+    }
+}
 
+//Function to get weatherbit API
 const getWthrFcst = async (baseURL, zip, key) => {
     const req = await fetch(baseURL+zip+key)
     try {
@@ -81,7 +94,7 @@ const getWthrFcst = async (baseURL, zip, key) => {
         console.log(data);
         return data;
     } catch(error) {
-        console.log('error', error);
+        console.log('errar at getWthrFcst', error);
     }
 }
 
