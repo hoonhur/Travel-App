@@ -25,8 +25,8 @@ function changeDateFormat(d) {
 
 function handleSubmit() {
 //declaration of variables
-    let city = document.getElementById(city).value;
-    let date = document.getElementById(date).value;
+    let city = document.getElementById('city').value;
+    let date = document.getElementById('date').value;
     let whtrDate = date;
     let diffDays 
 // Check Input Date
@@ -155,3 +155,5 @@ const updateUI = async() =>{
         console.log('error', error);
     }
 };
+
+export { handleSubmit }
