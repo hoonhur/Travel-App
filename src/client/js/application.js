@@ -41,7 +41,7 @@ function handleSubmit() {
 // Call Function to get Geonames API
     getGeonames(geoBaseUrl, city, geoUsername)
 // Call Function postData for Geonames API
-    .then (function(geoData){
+    .then(function(geoData) {
         postData('/addData', {
             country: geoData.countryCode,
             city: geoData.adminName1,
@@ -49,19 +49,29 @@ function handleSubmit() {
             longitude: geoData.lng
         })
     })
-// Call Function to get Weatherbit API 
+// Call Function to get Weatherbit API and postData
 // Forecast 16 days weather API for input date within 16 days
 // Historical weather API for date difference is over 16 days (including past date)
     .then(() => {
         if(diffDays >= 0 && diffDays < 16) {
             getWthrFcst(wthrBaseUrl, city, geoData.country, wthrKey)
+            .then(function(wthrData) {
+                postData('/addData', {
+                    highTemp: wthrData.data[diffDays].max_temp,
+                    lowTemp: wthrData.data[diffDays].min_temp,
+                    description: wthrData.data[diffDays].weather.description
+                })
+            })
         } else {
         getWtHstr(wthrHstrUrl, city, geoData.country, whtrDate, wthrKey)
+        .then(function(wthrData) {
+            postData('/addData', {
+                highTemp: wthrData.data.max_temp,
+                lowTemp: wthrData.data.min_temp,
+                description: 'This is historical weather.'
+            })
+        })
         }
-    })
-// Call Function postData for Weatherbit API
-    .then(function(){
-        postData()
     })
 // Call Function to get pixabay API
     .then(getPixabay())
