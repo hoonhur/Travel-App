@@ -57,33 +57,37 @@ function handleSubmit() {
     } 
     // Call Function to get Geonames API
     getGeonames(geoBaseUrl, city, geoUsername)
-    
+    .then( async (geoData) =>{
+        tripData['country'] = geoData.postalCodes[0].countryCode
+        console.log(tripData)
+        await getPixabay(pixBaseUrl, pixKey, pixPara, city, tripData.country)
+        await getWthrFcst(wthrBaseUrl, city, tripData.country, wthrKey)
+
+    })
     // Call Function to get pixabay API
-    .then(getPixabay(pixBaseUrl, pixKey, pixPara, city, tripData.country))
+    // .then(getPixabay(pixBaseUrl, pixKey, pixPara, city, tripData.country))
 
-    // Call Function to get Weatherbit API
-    // Forecast 16 days weather API for input date within 16 days
-    // Historical weather API for date difference is over 16 days (including past date)
-    .then(getWthrFcst(wthrBaseUrl, city, 'us', wthrKey))
-    //     if(diffDays >= 0 && diffDays < 16) { 
-    //         (getWthrFcst(wthrBaseUrl, city, tripData.country, wthrKey))
-    //     } else {
-    //         getWthrHstr(wthrHstrUrl, city, tripData.country, whtrDate, wthrKey)
-    //     }
-    // })  
-    .then(postData('http://localhost:8082/addData', tripData))
+    // // Call Function to get Weatherbit API
+    // // Forecast 16 days weather API for input date within 16 days
+    // // Historical weather API for date difference is over 16 days (including past date)
+    // .then(getWthrFcst(wthrBaseUrl, city, 'us', wthrKey))
+    // //     if(diffDays >= 0 && diffDays < 16) { 
+    // //         (getWthrFcst(wthrBaseUrl, city, tripData.country, wthrKey))
+    // //     } else {
+    // //         getWthrHstr(wthrHstrUrl, city, tripData.country, whtrDate, wthrKey)
+    // //     }
+    // // })  
+    .then( async () =>{
+        await postData('http://localhost:8082/addData', tripData)
+    })
 }
-
-// Function to get geonames API
+// Function to get geonames API        
 const getGeonames = async (url, city, username) => {
     const req = await fetch (url+city+username)
     try {
-        const geoRawData = await req.json()
-        const geoData = geoRawData.postalCodes[0]
+        const geoData = await req.json()
         console.log(geoData)
-        tripData['country'] = geoData.countryCode
-        console.log(tripData)
-        return tripData
+        return geoData
     } catch (error) {
         console.log('Error at getGeonames', error)
     }
@@ -135,7 +139,7 @@ const postData = async(url = '', data = {}) => {
             'Content-Type': 'application/json',
         },
         body: JSON.stringify(data), // body data type must match "Content-Type" header
-    });
+    })
     try {
         const allData = await res.json();
         console.log(allData);
