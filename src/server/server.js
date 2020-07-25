@@ -17,7 +17,7 @@ app.listen(8082, () => console.log(`running on localhost: 8082`));
 projectData = {}
 
 // Post Route
-app.post('/trip', (req,res) => {
+app.post('/addData', (req,res) => {
     let projectData = req.body;
     res.send(projectData);
 });
