@@ -18,6 +18,10 @@ projectData = {}
 
 // Post Route
 app.post('/addData', (req,res) => {
-    let projectData = req.body;
-    res.send(projectData);
-});
+    projectData = req.body;
+    res.send(projectData)
+})
+
+// app.get('/all', (req,res) => {
+//     res.send(projectData)
+// })

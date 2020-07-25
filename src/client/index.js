@@ -1,5 +1,5 @@
 import { handleSubmit } from './js/application'
-import { checkDate } from './js/checkDate'
+import { checkDate } from './js/checkdate'
 
 document.getElementById('generate').addEventListener('click', handleSubmit)
 
