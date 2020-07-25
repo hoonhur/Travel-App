@@ -21,7 +21,3 @@ app.post('/addData', (req,res) => {
     projectData = req.body;
     res.send(projectData)
 })
-
-// app.get('/all', (req,res) => {
-//     res.send(projectData)
-// })
