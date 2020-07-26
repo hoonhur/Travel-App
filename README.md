@@ -1,4 +1,4 @@
-# Weather-Journal App Project
+# Travel Planner
 
 ## Overview
 Trevel-APP is offering weather forcast information of the destination. User needs to input destination and departing date which should be within 16 days from search date. APP will show you how many days left to daparting date and brief weather information on that date.
