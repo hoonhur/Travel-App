@@ -16,9 +16,14 @@ app.listen(8082, () => console.log(`running on localhost: 8082`));
 // Setup empty JS object to act as endpoint for all routes
 let projectData = {}
 
-// Post Route
+// POST ROUTE
 app.post('/addData', (req,res) => {
     projectData = req.body;
+    res.send(projectData)
+})
+
+//GET ROUTE
+app.get('/getData', (req,res) => {
     res.send(projectData)
 })
 

@@ -1,3 +1,5 @@
+import fetch from "node-fetch"
+
 //* Decalaration of Global Variables *//
 
 // URL for geonames
@@ -18,7 +20,7 @@ let tripData = {}
 
 
 //* Function *//
-// Function to check number of difference of days from today
+
 function checkDiffDays(d) {
     let today = new Date()
     let currentDate = new Date(today)
@@ -26,15 +28,7 @@ function checkDiffDays(d) {
     let dfferenceInTime = date - currentDate
     //divide the time difference by no. of milleseconds in a day
     diffDays = Math.ceil(dfferenceInTime / (1000*60*60*24))
-    if(diffDays < 0 || diffDays >= 16) {
-        // changeDateFormat(date)
-        alert('Please input days within 16 days from today')
-    }  else {
-        tripData['diffDays'] = diffDays
-        console.log(diffDays)
-    }
 }
-
 // Main Function 
 function handleSubmit() {
     //declaration of variables
@@ -43,23 +37,30 @@ function handleSubmit() {
     tripData['city'] = city
     tripData['date'] = date
    
-    // Check Input Date
-    // 1. check format
-    Client.checkDate(date);
-    // 2. check difference number of date between today
+    //calculate difference number of date between today
     checkDiffDays(date);
+    if(diffDays < 0 || diffDays >= 16) {
+        // changeDateFormat(date)
+        alert('Please input days within 16 days from today')
+    }  else {
+        tripData['diffDays'] = diffDays
+        console.log(diffDays)
+    }
  
-    // Call Function to get Geonames API
+    // Call Function to get APIs
     getGeonames(city)
     .then( async (geoData) =>{
         tripData['country'] = geoData.postalCodes[0].countryCode
         await getweatherbit(city, tripData.country)
         await getPixabay(city)
     })
-    // Call Function to get pixabay API
+    
     .then( async () =>{
         await postData('http://localhost:8082/addData', tripData)
     })
+    .then ( async () => {
+        updateUI()
+})
 }
 
 // Function to get geonames API        
@@ -116,7 +117,19 @@ const postData = async(url = '', data = {}) => {
         body: JSON.stringify(data), // body data type must match "Content-Type" header
     })
     try {
-        const allData = await res.json();
+        const newData = await res.json()
+        console.log(newData)
+        return newData
+    } catch(error) {
+        console.log('Error at postData', error)
+    }
+}
+
+// GET ROUTE, function updateUI
+const updateUI = async() => {
+    const req = await fetch('http://localhost:8082/getData')
+    try {
+        const allData = await req.json();
         console.log(allData);
         document.getElementById('picture').innerHTML = `<img src='${allData.img}' width=300px height=200px>`
         document.getElementById('destination').innerHTML = `<h2>My trip to: ${allData.city}, ${allData.country}</h2>`
@@ -129,7 +142,6 @@ const postData = async(url = '', data = {}) => {
     }
 }
 
-
 // Remove function
 function cleartripSubmit() {
     tripData = {}
@@ -141,8 +153,6 @@ function cleartripSubmit() {
     document.getElementById('description').innerHTML = `<h4></h4>`
     console.log(tripData)
 }
-
-
 
 export { handleSubmit }
 export { cleartripSubmit }
