@@ -14,10 +14,12 @@ app.get('/', (req, res) => res.sendFile('dist/index.html'))
 app.listen(8082, () => console.log(`running on localhost: 8082`));
 
 // Setup empty JS object to act as endpoint for all routes
-projectData = {}
+let projectData = {}
 
 // Post Route
 app.post('/addData', (req,res) => {
     projectData = req.body;
     res.send(projectData)
 })
+
+module.exports = app
