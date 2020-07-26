@@ -11,7 +11,7 @@ const wthrKey = '0354bba909aa42b0a47bd1f252e02b21'
 // URL for pixabay
 const pixBaseUrl = 'https://pixabay.com/api/?key='
 const pixKey = '17552769-fee70d93d21f168f4a1a5c00a'
-const pixPara = '&image_type=photo&q'
+const pixPara = '&image_type=photo&q='
 
 let diffDays
 let tripData = {}
@@ -92,7 +92,7 @@ const getweatherbit = async (city, country) => {
 
 // Function to get pixabay API
 const getPixabay = async (city) => {
-    const req = await fetch(pixBaseUrl+pixKey+'&q'+city+'&image_type+photo')
+    const req = await fetch(pixBaseUrl+pixKey+'&q='+city+'&image_type+photo')
     try {
         const pixRawData = await req.json()
         const pixData = pixRawData.hits[0]
