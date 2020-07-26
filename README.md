@@ -38,5 +38,8 @@ optimize-css-assets-webpack-plugin terser-webpack-plugin
 ### References
 Start up codes are coming from my another projects, Proj_3Weather-Journal-App and Proj-4_Webpack.
 
+### Extend Project
+The APP is added addtional feature **allows user to remove the trip.**
+
 
 
